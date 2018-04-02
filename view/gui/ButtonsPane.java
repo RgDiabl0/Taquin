@@ -3,10 +3,10 @@ package view.gui;
 import javax.swing.*;
 
 class ButtonsPane extends JPanel {
-	private JButton startButton;
-	private JButton resetButton;
+	private final JButton startButton;
+	private final JButton resetButton;
 
-	ButtonsPane(BoardPane boardPane, MainGUI mainGUI) {
+	ButtonsPane(BoardPane boardPane) {
 		startButton = new JButton("Start");
 		resetButton = new JButton("Reset");
 		resetButton.setEnabled(false);

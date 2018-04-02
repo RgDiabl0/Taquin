@@ -8,7 +8,7 @@ import utility.Observer;
 import java.util.Scanner;
 
 public class Main implements Observer {
-	private Board board;
+	private final Board board;
 
 	private Main(Board board) {
 		this.board = board;

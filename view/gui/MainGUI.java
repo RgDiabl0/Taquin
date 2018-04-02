@@ -4,7 +4,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
-public class MainGUI extends JFrame {
+class MainGUI extends JFrame {
 	private static BoardPane boardPane;
 	private static ButtonsPane buttonsPane;
 
@@ -21,7 +21,7 @@ public class MainGUI extends JFrame {
 		contentPane.setLayout(new BorderLayout());
 
 		boardPane = new BoardPane();
-		buttonsPane = new ButtonsPane(boardPane, this);
+		buttonsPane = new ButtonsPane(boardPane);
 
 		contentPane.add(buttonsPane, BorderLayout.PAGE_START);
 		contentPane.add(boardPane, BorderLayout.CENTER);

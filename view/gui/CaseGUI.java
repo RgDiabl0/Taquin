@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.image.BufferedImage;
 
 class CaseGUI extends JButton {
-	private Case aCase;
+	private final Case aCase;
 
 	CaseGUI(Case aCase, BufferedImage icon) {
 		this.aCase = aCase;
@@ -23,7 +23,7 @@ class CaseGUI extends JButton {
 		}
 	}
 
-	Case getaCase() {
+	Case getCase() {
 		return aCase;
 	}
 }

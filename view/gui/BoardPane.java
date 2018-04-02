@@ -22,8 +22,9 @@ class BoardPane extends JPanel implements Observer {
 	private final int rows = 3;
 	private final int cols = 3;
 
+	private final ArrayList<CaseGUI> cases;
+
 	private Board board;
-	private ArrayList<CaseGUI> cases;
 	private GameController controller;
 
 	private BufferedImage bufferedImage;
@@ -83,12 +84,6 @@ class BoardPane extends JPanel implements Observer {
 		update();
 	}
 
-	private void moveButton(CaseGUI caseGUI) {
-		controller.move(caseGUI.getaCase());
-
-		update();
-	}
-
 	void setPlaying(boolean playing) {
 		isPlaying = playing;
 	}
@@ -104,16 +99,21 @@ class BoardPane extends JPanel implements Observer {
 						cases.add(new CaseGUI(board.getCases()[row][col], null));
 					else {
 						cases.add(new CaseGUI(board.getCases()[row][col], bufferedImage.getSubimage((imageWidth / cols) * col, (imageHeight / rows) * row, imageWidth / cols, imageHeight / rows)));
-						cases.get(cases.size() - 1).addActionListener(e -> moveButton((CaseGUI) e.getSource()));
+						cases.get(cases.size() - 1).addActionListener(e -> {
+							CaseGUI caseGUI = (CaseGUI) e.getSource();
+							controller.move(caseGUI.getCase());
+
+							update();
+						});
 					}
-				} else if (cases.get((row * rows) + col).getaCase() != board.getCases()[row][col])
+				} else if (cases.get((row * rows) + col).getCase() != board.getCases()[row][col])
 					for (CaseGUI caseGUI : cases)
-						if (caseGUI.getaCase() == board.getCases()[row][col])
+						if (caseGUI.getCase() == board.getCases()[row][col])
 							Collections.swap(cases, (row * rows) + col, cases.indexOf(caseGUI));
 			}
 
 		cases.forEach(caseGUI -> {
-			if (isPlaying && controller.isMovable(caseGUI.getaCase())) {
+			if (isPlaying && controller.isMovable(caseGUI.getCase())) {
 				caseGUI.setEnabled(true);
 				caseGUI.setBorderPainted(true);
 				caseGUI.setFocusPainted(true);

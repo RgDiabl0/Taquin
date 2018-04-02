@@ -67,7 +67,7 @@ public class Case {
 	}
 
 	void setId(String id) {
-		this.id = id;
+			this.id = id;
 	}
 
 	public int[] getCoord() {

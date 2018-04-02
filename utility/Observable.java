@@ -1,6 +1,6 @@
 package utility;
 
-public interface Observable {
+interface Observable {
 	void addObserver(Observer observer);
 	void removeObserver(Observer observer);
 	void notifyObservers();
