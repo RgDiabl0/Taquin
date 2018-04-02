@@ -7,7 +7,10 @@ import utility.Observer;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -74,12 +77,6 @@ class BoardPane extends JPanel implements Observer {
 		update();
 	}
 
-	@Override
-	protected void paintComponent(Graphics g) {
-		System.out.println("paintComponent");
-		super.paintComponent(g);
-	}
-
 	void shuffle() {
 		board.shuffleBoard();
 
@@ -120,6 +117,18 @@ class BoardPane extends JPanel implements Observer {
 				caseGUI.setEnabled(true);
 				caseGUI.setBorderPainted(true);
 				caseGUI.setFocusPainted(true);
+
+				caseGUI.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseEntered(MouseEvent e) {
+						caseGUI.setBorder(new LineBorder(Color.GREEN, 5));
+					}
+
+					@Override
+					public void mouseExited(MouseEvent e) {
+						caseGUI.setBorder(UIManager.getBorder("Button.border"));
+					}
+				});
 			} else {
 				caseGUI.setEnabled(false);
 				caseGUI.setBorderPainted(false);

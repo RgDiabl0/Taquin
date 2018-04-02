@@ -26,7 +26,7 @@ public class Board extends AbstractModel {
 			for (int col = 0; col < cols; col++)
 				cases[row][col] = new Case(this, new int[]{row, col});
 
-		cases[rows - 1][cols - 1].setId("X");
+		cases[rows - 1][cols - 1].setId(" ");
 	}
 
 	public void shuffleBoard() {

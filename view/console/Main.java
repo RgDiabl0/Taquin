@@ -20,9 +20,9 @@ public class Main implements Observer {
 		Main main = new Main(board);
 		GameController controller = new GameController(main.board);
 
-		board.shuffleBoard();
-
 		System.out.println(board);
+
+		board.shuffleBoard();
 
 		Scanner scanner = new Scanner(System.in);
 

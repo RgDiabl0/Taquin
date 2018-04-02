@@ -15,7 +15,7 @@ class CaseGUI extends JButton {
 		setBorderPainted(false);
 		setFocusPainted(false);
 
-		if (aCase.getId().equals("X"))
+		if (aCase.getId().equals(" "))
 			setContentAreaFilled(false);
 		else {
 			setIcon(new ImageIcon(icon));
