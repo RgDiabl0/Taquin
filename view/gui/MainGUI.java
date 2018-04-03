@@ -9,14 +9,6 @@ class MainGUI extends JFrame {
 	private static ButtonsPane buttonsPane;
 
 	private MainGUI() throws HeadlessException {
-		System.setProperty("apple.laf.useScreenMenuBar", "true");
-		System.setProperty("com.apple.mrj.application.apple.menu.about.name", "WikiTeX");
-		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (ClassNotFoundException | InstantiationException | UnsupportedLookAndFeelException | IllegalAccessException e) {
-			e.printStackTrace();
-		}
-
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setLayout(new BorderLayout());
