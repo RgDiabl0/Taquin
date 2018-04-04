@@ -4,6 +4,8 @@ import model.Board;
 import model.Case;
 import model.Direction;
 
+import java.util.ArrayList;
+
 public class GameController {
 	private final Board board;
 
@@ -37,15 +39,21 @@ public class GameController {
 	}
 
 	public boolean isFinished() {
-		boolean isFinished = false;
+		ArrayList<Boolean> goodPlacements = new ArrayList<>();
+
+		if (board.getCases()[board.getCases().length - 1][board.getCases().length - 1].getId().equals(" "))
+			goodPlacements.add(true);
+		else
+			goodPlacements.add(false);
 
 		for (int row = 0; row < board.getCases().length; row++)
 			for (int col = 0; col < board.getCases()[row].length; col++)
-				if (board.getCases()[row][col].getId().equals(String.valueOf((board.getCases().length * row) + col)))
-					isFinished = true;
-				else
-					return false;
+				if (!board.getCases()[row][col].getId().equals(" "))
+					if (board.getCases()[row][col].getId().equals(String.valueOf((board.getCases().length * row) + col)))
+						goodPlacements.add(true);
+					else
+						goodPlacements.add(false);
 
-		return isFinished;
+		return goodPlacements.stream().allMatch(e -> e);
 	}
 }

@@ -20,7 +20,7 @@ class MainGUI extends JFrame {
 
 		contentPane.setLayout(new BorderLayout());
 
-		boardPane = new BoardPane();
+		boardPane = new BoardPane(this);
 		buttonsPane = new ButtonsPane(boardPane);
 
 		contentPane.add(buttonsPane, BorderLayout.PAGE_START);
@@ -30,12 +30,13 @@ class MainGUI extends JFrame {
 		setVisible(true);
 	}
 
-	static void isFinished(){
+	void isFinished(){
 		JDialog winDialog = new JDialog();
 		JPanel winPanel = new JPanel();
 
 		winDialog.setContentPane(winPanel);
 		winDialog.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		winDialog.setLocationRelativeTo(this);
 		winDialog.setResizable(false);
 		winDialog.setTitle("You won !");
 
@@ -49,6 +50,7 @@ class MainGUI extends JFrame {
 			winDialog.dispose();
 
 			boardPane.setPlaying(false);
+			boardPane.setFocusable(false);
 			boardPane.resetBoard();
 
 			buttonsPane.getStartButton().setEnabled(true);

@@ -24,6 +24,8 @@ class BoardPane extends JPanel implements Observer {
 	private final int rows = 3;
 	private final int cols = 3;
 
+	private MainGUI mainGUI;
+
 	private final ArrayList<CaseGUI> cases;
 
 	private Board board;
@@ -35,7 +37,9 @@ class BoardPane extends JPanel implements Observer {
 
 	private boolean isPlaying;
 
-	BoardPane() {
+	BoardPane(MainGUI mainGUI) {
+		this.mainGUI = mainGUI;
+
 		board = new Board(rows, cols);
 		cases = new ArrayList<>();
 		controller = new GameController(board);
@@ -185,7 +189,7 @@ class BoardPane extends JPanel implements Observer {
 		revalidate();
 		repaint();
 
-		if (controller.isFinished())
-			MainGUI.isFinished();
+		if (isPlaying && controller.isFinished())
+			mainGUI.isFinished();
 	}
 }
