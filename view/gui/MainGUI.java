@@ -8,7 +8,7 @@ class MainGUI extends JFrame {
 	private static BoardPane boardPane;
 	private static ButtonsPane buttonsPane;
 
-	private MainGUI() throws HeadlessException {
+	private MainGUI() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setLayout(new BorderLayout());

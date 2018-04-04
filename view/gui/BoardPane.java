@@ -9,6 +9,8 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -41,6 +43,48 @@ class BoardPane extends JPanel implements Observer {
 
 		setLayout(new GridLayout(rows, cols));
 		setSize(new Dimension(360, 360));
+
+		addKeyListener(new KeyListener() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+			}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				Case emptyCase = board.getCase(" ");
+
+				switch (e.getKeyCode()) {
+					case 37: // left
+						if (emptyCase.getCoord()[1] - 1 >= 0) {
+							controller.move(board.getCases()[emptyCase.getCoord()[0]][emptyCase.getCoord()[1] - 1]);
+							update();
+						}
+						break;
+					case 38: // up
+						if (emptyCase.getCoord()[0] - 1 >= 0) {
+							controller.move(board.getCases()[emptyCase.getCoord()[0] - 1][emptyCase.getCoord()[1]]);
+							update();
+						}
+						break;
+					case 39: // right
+						if (emptyCase.getCoord()[1] + 1 < board.getCases().length) {
+							controller.move(board.getCases()[emptyCase.getCoord()[0]][emptyCase.getCoord()[1] + 1]);
+							update();
+						}
+						break;
+					case 40: // down
+						if (emptyCase.getCoord()[0] + 1 < board.getCases().length) {
+							controller.move(board.getCases()[emptyCase.getCoord()[0] + 1][emptyCase.getCoord()[1]]);
+							update();
+						}
+						break;
+				}
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+			}
+		});
 
 		initPane();
 	}

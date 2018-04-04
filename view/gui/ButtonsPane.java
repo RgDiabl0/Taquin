@@ -16,6 +16,8 @@ class ButtonsPane extends JPanel {
 			resetButton.setEnabled(true);
 
 			boardPane.setPlaying(true);
+			boardPane.setFocusable(true);
+			boardPane.requestFocus();
 			boardPane.shuffle();
 		});
 
@@ -24,6 +26,7 @@ class ButtonsPane extends JPanel {
 			resetButton.setEnabled(false);
 
 			boardPane.setPlaying(false);
+			boardPane.setFocusable(false);
 			boardPane.resetBoard();
 		});
 
