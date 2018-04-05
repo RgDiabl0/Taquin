@@ -7,9 +7,9 @@ import model.Direction;
 import java.util.ArrayList;
 
 public class GameController {
-	private final Board board;
+	private Board board;
 
-	public GameController(Board board) {
+	public void setBoard(Board board) {
 		this.board = board;
 	}
 

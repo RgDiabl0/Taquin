@@ -16,15 +16,24 @@ public class Main implements Observer {
 	}
 
 	public static void main(String[] args) {
-		Board board = new Board(3, 3);
-		Main main = new Main(board);
-		GameController controller = new GameController(main.board);
+		Scanner scanner = new Scanner(System.in);
 
-		System.out.println(board);
+		System.out.println("Enter the grid dimension : ");
+
+		int dimension;
+
+		do {
+			dimension = scanner.nextInt();
+		} while (dimension <= 1);
+
+		Board board = new Board(dimension);
+		Main main = new Main(board);
+		GameController controller = new GameController();
+		controller.setBoard(main.board);
+
+		System.out.println("\n\n\n" +board);
 
 		board.shuffleBoard();
-
-		Scanner scanner = new Scanner(System.in);
 
 		while (!controller.isFinished()) {
 			System.out.println("Select case :");

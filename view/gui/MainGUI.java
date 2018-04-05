@@ -21,7 +21,7 @@ class MainGUI extends JFrame {
 		contentPane.setLayout(new BorderLayout());
 
 		boardPane = new BoardPane(this);
-		buttonsPane = new ButtonsPane(boardPane);
+		buttonsPane = new ButtonsPane(boardPane, this);
 
 		contentPane.add(buttonsPane, BorderLayout.PAGE_START);
 		contentPane.add(boardPane, BorderLayout.CENTER);
@@ -55,6 +55,8 @@ class MainGUI extends JFrame {
 
 			buttonsPane.getStartButton().setEnabled(true);
 			buttonsPane.getResetButton().setEnabled(false);
+			buttonsPane.getSizeChooser().setEnabled(true);
+			buttonsPane.getValidateButton().setEnabled(true);
 		});
 
 		winPanel.setBorder(new EmptyBorder(10, 10, 10, 10));

@@ -21,15 +21,13 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 class BoardPane extends JPanel implements Observer {
-	private final int rows = 3;
-	private final int cols = 3;
+	private int dimension;
 
-	private MainGUI mainGUI;
-
+	private final MainGUI mainGUI;
 	private final ArrayList<CaseGUI> cases;
+	private final GameController controller;
 
 	private Board board;
-	private GameController controller;
 
 	private BufferedImage bufferedImage;
 	private int imageHeight;
@@ -39,14 +37,16 @@ class BoardPane extends JPanel implements Observer {
 
 	BoardPane(MainGUI mainGUI) {
 		this.mainGUI = mainGUI;
+		this.dimension = 3;
 
-		board = new Board(rows, cols);
+		board = new Board(dimension);
 		cases = new ArrayList<>();
-		controller = new GameController(board);
+		controller = new GameController();
 		isPlaying = false;
 
-		setLayout(new GridLayout(rows, cols));
-		setSize(new Dimension(360, 360));
+		setPaneLayout(360);
+
+		controller.setBoard(board);
 
 		addKeyListener(new KeyListener() {
 			@Override
@@ -93,6 +93,11 @@ class BoardPane extends JPanel implements Observer {
 		initPane();
 	}
 
+	private void setPaneLayout(int size) {
+		setLayout(new GridLayout(dimension, dimension));
+		setSize(new Dimension(size/2 * dimension, size/2 * dimension));
+	}
+
 	private void initPane() {
 		Image image = null;
 
@@ -116,10 +121,21 @@ class BoardPane extends JPanel implements Observer {
 		update();
 	}
 
+	void resetBoard(int dimension) {
+		this.dimension = dimension;
+
+		Case.COUNT = new AtomicInteger(0);
+		board = new Board(dimension);
+		controller.setBoard(board);
+
+		cases.clear();
+
+		update();
+	}
+
 	void resetBoard() {
 		Case.COUNT = new AtomicInteger(0);
-		board = new Board(rows, cols);
-		controller = new GameController(board);
+		board.initBoard();
 
 		cases.clear();
 
@@ -140,13 +156,13 @@ class BoardPane extends JPanel implements Observer {
 	public void update() {
 		removeAll();
 
-		for (int row = 0; row < rows; row++)
-			for (int col = 0; col < cols; col++) {
-				if (cases.size() < rows * cols) {
-					if (cases.size() == (rows * cols) - 1)
+		for (int row = 0; row < dimension; row++)
+			for (int col = 0; col < dimension; col++) {
+				if (cases.size() < dimension * dimension) {
+					if (cases.size() == (dimension * dimension) - 1)
 						cases.add(new CaseGUI(board.getCases()[row][col], null));
 					else {
-						cases.add(new CaseGUI(board.getCases()[row][col], bufferedImage.getSubimage((imageWidth / cols) * col, (imageHeight / rows) * row, imageWidth / cols, imageHeight / rows)));
+						cases.add(new CaseGUI(board.getCases()[row][col], bufferedImage.getSubimage((imageWidth / dimension) * col, (imageHeight / dimension) * row, imageWidth / dimension, imageHeight / dimension)));
 						cases.get(cases.size() - 1).addActionListener(e -> {
 							CaseGUI caseGUI = (CaseGUI) e.getSource();
 							controller.move(caseGUI.getCase());
@@ -154,11 +170,13 @@ class BoardPane extends JPanel implements Observer {
 							update();
 						});
 					}
-				} else if (cases.get((row * rows) + col).getCase() != board.getCases()[row][col])
+				} else if (cases.get((row * dimension) + col).getCase() != board.getCases()[row][col])
 					for (CaseGUI caseGUI : cases)
 						if (caseGUI.getCase() == board.getCases()[row][col])
-							Collections.swap(cases, (row * rows) + col, cases.indexOf(caseGUI));
+							Collections.swap(cases, (row * dimension) + col, cases.indexOf(caseGUI));
 			}
+
+		setPaneLayout(cases.get(0).getIcon().getIconHeight());
 
 		cases.forEach(caseGUI -> {
 			if (isPlaying && controller.isMovable(caseGUI.getCase())) {
@@ -188,6 +206,8 @@ class BoardPane extends JPanel implements Observer {
 
 		revalidate();
 		repaint();
+
+		mainGUI.setLocationRelativeTo(null);
 
 		if (isPlaying && controller.isFinished())
 			mainGUI.isFinished();
